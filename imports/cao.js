@@ -18,6 +18,8 @@ cao.init = function () {
     collection._ensureIndex('userId', { unique: 1 })
 
     Meteor.publish('wocao', function () {
+      if (this.unblock) this.unblock()
+
       if (! this.userId) return this.ready()
 
       const isExist = collection.findOne({ userId: this.userId })
