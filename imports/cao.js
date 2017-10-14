@@ -42,18 +42,23 @@ cao.init = function () {
   })
 }
 
-cao.autorun = function (fn) {
+cao.autorun = function (fn, ctx) {
   if (Meteor.isClient)
     return console.log('cao.autorun is server only')
 
-  const ctx = DDP._CurrentPublicationInvocation.get()
+  // support old meteor version, will remove later
+  const _ctx = ctx || DDP._CurrentPublicationInvocation.get()
 
-  const cursor = collection.find({ userId: ctx.userId })
+  const cursor = collection.find({ userId: _ctx.userId })
 
   const observeHandler = cursor.observe({
     changed(current, previous) {
       fn(current, previous)
     }
+  })
+
+  _ctx.onStop(function () {
+    observeHandler.stop()
   })
 
   return observeHandler
