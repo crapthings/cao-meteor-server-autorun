@@ -1,7 +1,5 @@
 import cao from '/imports/cao'
 
-cao.init()
-
 Meteor.startup(function () {
 
   if (! Meteor.users.findOne())

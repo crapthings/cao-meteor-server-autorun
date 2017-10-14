@@ -1,7 +1,5 @@
 import cao from '/imports/cao'
 
-cao.init()
-
 TrackerHandler = null
 SubscriptionHandler = null
 
